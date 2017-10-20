@@ -1,6 +1,6 @@
 # BehaviorTree
 
-Behavior tree library for C#
+Behavior tree implementation for Unity
 
 ## Actions
 Actions that can be added by using ActionDelegate delegate
