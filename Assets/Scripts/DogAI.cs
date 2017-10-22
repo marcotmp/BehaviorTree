@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class DogAI : MonoBehaviour {
 
-    private CompositeTask ai;
+    private Task ai;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start() {
+        var bt = new BehaviorTreeBuilder();
+        ai = bt.Selector("Car IA")
+                .Add(
+                    bt.Sequence("Stop Light")
+                        .Add(bt.Action("actiono 1", null))
+                        .Add(bt.Action("actiono 2", null))
+                        .Add(bt.Action("actiono 3", null))
+                    .Build()
+                )
+                //.Add()
+            .Build();
+
+
         ai = new Selector("Dog AI")
         {
             tasks =
