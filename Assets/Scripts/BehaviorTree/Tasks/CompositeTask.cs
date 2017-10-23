@@ -6,11 +6,12 @@ public class CompositeTask : Task {
 
     public List<Task> tasks;
 
-    public CompositeTask(string name) : base(name) { }
+    public CompositeTask(string name) : base(name) {
+        tasks = new List<Task>();
+    }
 
-    public CompositeTask AddTask(CompositeTask task)
+    public void AddTask(Task task)
     {
         tasks.Add(task);
-        return this;
     }
 }

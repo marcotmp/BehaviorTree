@@ -1,7 +1,7 @@
-﻿public class Conditional : Task {
+﻿public class Conditional : DecoratorTask {
     private ConditionalDelegate conditionalDelegate;
 
-    public Conditional(string name, ConditionalDelegate conditionalDelegate)
+    public Conditional(string name, ConditionalDelegate conditionalDelegate) : base(name)
     {
         this.conditionalDelegate = conditionalDelegate;
     }

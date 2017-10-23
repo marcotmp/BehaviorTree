@@ -24,4 +24,10 @@ public class Sequence : CompositeTask {
             return returnCode;
         }
     }
+
+    public override void Restart()
+    {
+        taskIndex = 0;
+        base.Restart();
+    }
 }

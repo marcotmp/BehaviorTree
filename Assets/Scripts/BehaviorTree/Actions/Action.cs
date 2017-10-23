@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Action : Task {
     private ActionDelegate actionDelegate;
-
-    public Action(string name, ActionDelegate actionDelegate)
+    
+    public Action(string name, ActionDelegate actionDelegate) : base(name)
     {
         if (actionDelegate == null)
             throw new UnassignedReferenceException();
