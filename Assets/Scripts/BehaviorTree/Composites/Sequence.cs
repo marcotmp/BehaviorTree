@@ -14,7 +14,7 @@ public class Sequence : CompositeTask {
         if (returnCode == ReturnCode.Succeed)
         {
             taskIndex++;
-            if (taskIndex > tasks.Count)
+            if (taskIndex >= tasks.Count)
                 return ReturnCode.Succeed;
             else
                 return ReturnCode.Running;
