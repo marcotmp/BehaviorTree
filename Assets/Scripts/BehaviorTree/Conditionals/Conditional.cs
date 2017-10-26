@@ -1,4 +1,4 @@
-﻿public class Conditional : DecoratorTask {
+﻿public class Conditional : Task {
     private ConditionalDelegate conditionalDelegate;
 
     public Conditional(string name, ConditionalDelegate conditionalDelegate) : base(name)
