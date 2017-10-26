@@ -10,8 +10,12 @@ public class Sequence : CompositeTask {
 
     override public ReturnCode Update()
     {
-        if (taskIndex >= tasks.Count)
+        if (tasks == null || tasks.Count == 0)
             return ReturnCode.Succeed;
+
+        //var task = tasks[taskIndex];
+        //if (task == null)
+        //    return ReturnCode.Running;
 
         var returnCode = tasks[taskIndex].Update();
         if (returnCode == ReturnCode.Succeed)

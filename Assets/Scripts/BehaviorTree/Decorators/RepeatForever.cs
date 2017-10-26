@@ -10,6 +10,8 @@ public class RepeatForever : DecoratorTask {
     
     public override ReturnCode Update()
     {
+        if (task == null) return base.Update();
+
         if (task.Update() == ReturnCode.Succeed)
         {
             task.Restart();

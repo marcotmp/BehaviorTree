@@ -11,6 +11,9 @@ public class RandomSelector : Selector
 
     override public ReturnCode Update()
     {
+        // isEmpty?
+        if (taskIndex >= tasks.Count) return ReturnCode.Fail;
+
         var returnCode = tasks[taskIndex].Update();
         if (returnCode == ReturnCode.Fail)
         {

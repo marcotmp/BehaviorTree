@@ -10,37 +10,58 @@ public class BotAI : MonoBehaviour {
     public float botSpeed = 1;
     public float chaseMinimunDistance = 1;
     public float chaseMaximunDistance = 1;
-
-
-    private RepeatForever ai;
+    
+    private Task ai;
     private Transform target;
 
     void Start() {
         target = pointA;
+        
+        BehaviorTreeBuilder builder = new BehaviorTreeBuilder();
+        ai = builder
+            .RepeatForever("AI Loop")
+                .Sequence("States")
+                    .Action("Patrol", Patrol)
+                    .RandomSelector("Say Back off")
+                        .Action("Say back off 1", delegate () { Say("Back off!"); return ReturnCode.Succeed; })
+                        .Action("Say back off 2", delegate () { Say("Don't touch me!"); return ReturnCode.Succeed; })
+                        .Action("Say back off 3", delegate () { Say("What are you doing?"); return ReturnCode.Succeed; })
+                        .Action("Say back off 4", delegate () { Say("Let me alone!"); return ReturnCode.Succeed; })
+                        .Action("Say back off 5", delegate () { Say("Don't you see I'm busy!"); return ReturnCode.Succeed; })
+                        .End()
+                    .Action("chase", Chase)
+                    .RandomSelector("Say Thank you")
+                        .Action("Say Thank you 1", delegate () { Say("Thank you!"); return ReturnCode.Succeed; })
+                        .Action("Say Thank you 2", delegate () { Say("Much better!"); return ReturnCode.Succeed; })
+                        .End()
+                    .End()
+                .End()
+            .Build();
 
-        ai = new RepeatForever("AI Loop");
-        var stateList = new Sequence("AI Sequence");
-        var patrol = new Action("Patrol", Patrol);
-        var backOffRandomSelector = new RandomSelector("Say Backoff");
-        var sayBackoff1 = new Action("Say Backoff 1", delegate() { Say("Back off!"); return ReturnCode.Succeed; });
-        var sayBackoff2 = new Action("Say Backoff 2", delegate() { Say("Don't touch me!"); return ReturnCode.Succeed; });
-        var chase = new Action("Chase", Chase);
-        var thankYouRandomSelector = new RandomSelector("Say Thank you");
-        var sayThankYou1 = new Action("Say Thank you 1", delegate () { Say("Thank you!"); return ReturnCode.Succeed; });
-        var sayThankYou2 = new Action("Say Thank you 2", delegate () { Say("Much better!"); return ReturnCode.Succeed; });
+        // you can also use the BehaviorTree classes as follow
+        //var repeatForever = new RepeatForever("AI Loop");
+        //var stateList = new Sequence("AI Sequence");
+        //var patrol = new Action("Patrol", Patrol);
+        //var backOffRandomSelector = new RandomSelector("Say Backoff");
+        //var sayBackoff1 = new Action("Say Backoff 1", delegate() { Say("Back off!"); return ReturnCode.Succeed; });
+        //var sayBackoff2 = new Action("Say Backoff 2", delegate() { Say("Don't touch me!"); return ReturnCode.Succeed; });
+        //var chase = new Action("Chase", Chase);
+        //var thankYouRandomSelector = new RandomSelector("Say Thank you");
+        //var sayThankYou1 = new Action("Say Thank you 1", delegate () { Say("Thank you!"); return ReturnCode.Succeed; });
+        //var sayThankYou2 = new Action("Say Thank you 2", delegate () { Say("Much better!"); return ReturnCode.Succeed; });
 
-        backOffRandomSelector.AddTask(sayBackoff2);
-        backOffRandomSelector.AddTask(sayBackoff1);
-        thankYouRandomSelector.AddTask(sayThankYou2);
-        thankYouRandomSelector.AddTask(sayThankYou1);
+        //backOffRandomSelector.AddTask(sayBackoff2);
+        //backOffRandomSelector.AddTask(sayBackoff1);
+        //thankYouRandomSelector.AddTask(sayThankYou2);
+        //thankYouRandomSelector.AddTask(sayThankYou1);
 
-        stateList.AddTask(patrol);
-        stateList.AddTask(backOffRandomSelector);
-        stateList.AddTask(chase);
-        stateList.AddTask(thankYouRandomSelector);
-
-        ai.AddTask(stateList);
-
+        //stateList.AddTask(patrol);
+        //stateList.AddTask(backOffRandomSelector);
+        //stateList.AddTask(chase);
+        //stateList.AddTask(thankYouRandomSelector);
+        //repeatForever.AddTask(stateList);
+        //
+        //ai = repeatForever;
     }
 
     // Update is called once per frame
