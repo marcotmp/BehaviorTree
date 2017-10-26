@@ -2,15 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Not : MonoBehaviour {
+public class Not : DecoratorTask
+{
+    public Not(string name) : base(name)
+    {
+    }
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public override ReturnCode Update()
+    {
+        var returnCode = task.Update();
+        if (returnCode == ReturnCode.Fail)
+            return ReturnCode.Succeed;
+        else if (returnCode == ReturnCode.Succeed)
+            return ReturnCode.Fail;
+        else
+            return ReturnCode.Running;
+    }
 }
