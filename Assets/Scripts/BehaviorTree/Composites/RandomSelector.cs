@@ -2,15 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomSelector : MonoBehaviour {
+public class RandomSelector : Selector
+{
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private int taskIndex = 0;
+
+    public RandomSelector(string name) : base(name) { }
+
+    override public ReturnCode Update()
+    {
+        var returnCode = tasks[taskIndex].Update();
+        if (returnCode == ReturnCode.Fail)
+        {
+            taskIndex = GetRandomIndex();
+            return ReturnCode.Running;
+        }
+        else
+        {
+            return returnCode;
+        }
+    }
+
+    public override void Restart()
+    {
+        base.Restart();
+
+        taskIndex = GetRandomIndex();
+    }
+
+    private int GetRandomIndex()
+    {
+        var randomIndex = Random.Range(0, tasks.Count);
+        if (randomIndex == tasks.Count) randomIndex = tasks.Count - 1;
+
+        return randomIndex;
+    }
 }
