@@ -14,4 +14,13 @@ public class CompositeTask : Task {
     {
         tasks.Add(task);
     }
+
+    public override void Restart()
+    {
+        foreach (Task task in tasks)
+        {
+            task.Restart();
+        }
+        base.Restart();
+    }
 }
