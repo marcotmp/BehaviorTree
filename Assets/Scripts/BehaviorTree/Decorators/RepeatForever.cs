@@ -2,23 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RepeatForever : Task {
-    private Task childTask;
-
+public class RepeatForever : DecoratorTask {
+    
     public RepeatForever(string name) : base(name)
     {
     }
-
-    public void SetChildTask(Task task)
-    {
-        childTask = task;
-    }
-
+    
     public override ReturnCode Update()
     {
-        if (childTask.Update() == ReturnCode.Succeed)
+        if (task.Update() == ReturnCode.Succeed)
         {
-            childTask.Restart();
+            task.Restart();
         }
 
         return base.Update();

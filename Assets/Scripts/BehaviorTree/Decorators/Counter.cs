@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Counter : Task {
-    public Task task;
+public class Counter : DecoratorTask {
 
     private int count = 0;
     private int i = 0;
@@ -31,5 +30,6 @@ public class Counter : Task {
     public override void Restart()
     {
         i = 0;
+        base.Restart();
     }
 }

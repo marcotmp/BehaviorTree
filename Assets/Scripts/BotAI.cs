@@ -17,7 +17,7 @@ public class BotAI : MonoBehaviour {
 
     void Start() {
         target = pointA;
-        
+
         ai = new RepeatForever("AI Loop");
         var stateList = new Sequence("AI Sequence");
         var patrol = new Action("Patrol", Patrol);
@@ -39,7 +39,7 @@ public class BotAI : MonoBehaviour {
         stateList.AddTask(chase);
         stateList.AddTask(thankYouRandomSelector);
 
-        ai.SetChildTask(stateList);
+        ai.AddTask(stateList);
 
     }
 
