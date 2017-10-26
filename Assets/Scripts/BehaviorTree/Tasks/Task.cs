@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Task {
+﻿public class Task {
     public string name;
 
     public Task(string name) { this.name = name; }

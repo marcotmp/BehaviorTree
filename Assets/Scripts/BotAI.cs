@@ -17,24 +17,28 @@ public class BotAI : MonoBehaviour {
 
     void Start() {
         target = pointA;
-
-        /*
-         Repeate Forever
-            Sequence
-                patrol -> move to a, move to b
-                chase -> move until is far
-         */
-
+        
         ai = new RepeatForever("AI Loop");
         var stateList = new Sequence("AI Sequence");
         var patrol = new Action("Patrol", Patrol);
-        var sayBackoff = new Action("Say Backoff", delegate() { Say("Back off!"); return ReturnCode.Succeed; });
+        var backOffRandomSelector = new RandomSelector("Say Backoff");
+        var sayBackoff1 = new Action("Say Backoff 1", delegate() { Say("Back off!"); return ReturnCode.Succeed; });
+        var sayBackoff2 = new Action("Say Backoff 2", delegate() { Say("Don't touch me!"); return ReturnCode.Succeed; });
         var chase = new Action("Chase", Chase);
-        var sayThankYou = new Action("Say Thank you", delegate () { Say("Thank you"); return ReturnCode.Succeed; });
+        var thankYouRandomSelector = new RandomSelector("Say Thank you");
+        var sayThankYou1 = new Action("Say Thank you 1", delegate () { Say("Thank you!"); return ReturnCode.Succeed; });
+        var sayThankYou2 = new Action("Say Thank you 2", delegate () { Say("Much better!"); return ReturnCode.Succeed; });
+
+        backOffRandomSelector.AddTask(sayBackoff2);
+        backOffRandomSelector.AddTask(sayBackoff1);
+        thankYouRandomSelector.AddTask(sayThankYou2);
+        thankYouRandomSelector.AddTask(sayThankYou1);
+
         stateList.AddTask(patrol);
-        stateList.AddTask(sayBackoff);
+        stateList.AddTask(backOffRandomSelector);
         stateList.AddTask(chase);
-        stateList.AddTask(sayThankYou);
+        stateList.AddTask(thankYouRandomSelector);
+
         ai.SetChildTask(stateList);
 
     }
